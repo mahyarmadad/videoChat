@@ -1,0 +1,12 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.chat-messages-div {
+  flex: 1;
+}
+.chat-text-field {
+  background-color: white;
+  color: black !important;
+}

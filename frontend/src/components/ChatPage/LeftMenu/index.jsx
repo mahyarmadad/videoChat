@@ -7,15 +7,24 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { useState } from "react";
+import { toast } from "material-react-toastify";
+import { useEffect, useState } from "react";
 import { FiCopy } from "react-icons/fi";
 import { GiVideoConference } from "react-icons/gi";
-import ConnectButton from "./../../ConnectButton";
+import ConnectButton from "./ConnectButton";
 import "./leftMenu.css";
-
-export default function LeftMenu({ navigator }) {
+export default function LeftMenu({ socketID, navigator }) {
+  const [myCode, setMycode] = useState("");
   const [friendCode, setFriendCode] = useState("");
   const [allowStrange, setAllowStrange] = useState(false);
+
+  useEffect(() => {
+    if (socketID) {
+      console.log(`socketID`, socketID);
+      setMycode(socketID.id);
+    }
+  }, [socketID]);
+
   return (
     <Grid item xs className="gridLeft">
       <div className="flex-center medium-gap">
@@ -36,11 +45,17 @@ export default function LeftMenu({ navigator }) {
       <TextField
         label="Your Personal Code"
         fullWidth
+        value={myCode ? myCode : ""}
         variant="outlined"
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton onClick={() => {}}>
+              <IconButton
+                onClick={() => {
+                  navigator?.clipboard.writeText(myCode);
+                  toast.info(`${myCode} copy to clipboard`);
+                }}
+              >
                 <FiCopy />
               </IconButton>
             </InputAdornment>
@@ -56,14 +71,21 @@ export default function LeftMenu({ navigator }) {
           value={friendCode}
           onChange={(e) => setFriendCode(e.target.value)}
         />
-        <ConnectButton />
+        <ConnectButton
+          disabled={!friendCode}
+          onChatClick={() => console.log(`CHAT CLCIK`)}
+          onVideoClick={() => console.log(`Video CLCIK`)}
+        />
       </div>
 
       <div className="strange-connect-group">
         <Typography variant="body1" color="textPrimary">
           Stranger
         </Typography>
-        <ConnectButton />
+        <ConnectButton
+          onChatClick={() => console.log(`CHAT CLCIK`)}
+          onVideoClick={() => console.log(`Video CLCIK`)}
+        />
       </div>
 
       <FormControlLabel

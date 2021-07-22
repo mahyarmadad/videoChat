@@ -1,3 +1,16 @@
 .gridLeft {
   display: grid;
 }
+.primary-button {
+  color: #039be5 !important;
+  font-weight: bold !important;
+}
+.secondary-button {
+  color: #f9a825 !important;
+  font-weight: bold !important;
+}
+.secondary-button.Mui-disabled,
+.primary-button.Mui-disabled {
+  color: #ffffff4d !important;
+  font-weight: normal !important;
+}

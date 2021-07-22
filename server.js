@@ -18,6 +18,7 @@ let users = [];
 io.on("connection", (socket) => {
   console.log(`User Connected to IO : >> ${socket.id}`.underline.brightBlue);
   users.push(socket.id);
+
   socket.on("disconnect", () => {
     console.log(`User disconnect`.brightCyan);
     const newUser = users.filter((user) => user !== socket.id);
