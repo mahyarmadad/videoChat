@@ -1,0 +1,10 @@
+.gridDiv {
+  height: 100%;
+  padding: 24px;
+}
+.gridDiv > div {
+  padding: 16px;
+}
+.gridLeft {
+  background-color: cornflowerblue;
+}

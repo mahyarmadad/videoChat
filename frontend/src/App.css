@@ -1,0 +1,22 @@
+.container {
+  height: 100vh;
+}
+
+/* Global */
+.flex-center {
+  display: flex;
+  align-items: center;
+}
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+.justify-center {
+  justify-content: center;
+}
+.medium-gap {
+  gap: 16px;
+}
+.medium-margin-top {
+  margin-top: 16px;
+}
