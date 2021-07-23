@@ -13,11 +13,10 @@ import { FiCopy } from "react-icons/fi";
 import { GiVideoConference } from "react-icons/gi";
 import ConnectButton from "./ConnectButton";
 import "./leftMenu.css";
-export default function LeftMenu({ socket, navigator }) {
+export default function LeftMenu({ socket }) {
   const [myCode, setMycode] = useState("");
   const [friendCode, setFriendCode] = useState("");
   const [allowStrange, setAllowStrange] = useState(false);
-
   useEffect(() => {
     if (socket) {
       setMycode(socket.id);
