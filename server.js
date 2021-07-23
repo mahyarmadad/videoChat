@@ -19,6 +19,16 @@ io.on("connection", (socket) => {
   console.log(`User Connected to IO : >> ${socket.id}`.underline.brightBlue);
   users.push(socket.id);
 
+  socket.on("pre-offer", (data) => {
+    const { type, code } = data;
+    const connectedPeer = users.find((user) => user == code);
+    console.log(`connectedPeer`, connectedPeer);
+    if (connectedPeer) {
+      const data = { callerId: socket.id, type };
+      io.to(code).emit("pre-offer", data);
+    }
+  });
+
   socket.on("disconnect", () => {
     console.log(`User disconnect`.brightCyan);
     const newUser = users.filter((user) => user !== socket.id);
