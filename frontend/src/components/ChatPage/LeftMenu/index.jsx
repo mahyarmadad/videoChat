@@ -13,18 +13,23 @@ import { FiCopy } from "react-icons/fi";
 import { GiVideoConference } from "react-icons/gi";
 import ConnectButton from "./ConnectButton";
 import "./leftMenu.css";
-export default function LeftMenu({ socketID, navigator }) {
+export default function LeftMenu({ socket, navigator }) {
   const [myCode, setMycode] = useState("");
   const [friendCode, setFriendCode] = useState("");
   const [allowStrange, setAllowStrange] = useState(false);
 
   useEffect(() => {
-    if (socketID) {
-      console.log(`socketID`, socketID);
-      setMycode(socketID.id);
+    if (socket) {
+      setMycode(socket.id);
     }
-  }, [socketID]);
+  }, [socket]);
 
+  const onButtonClick = (type, code) => {
+    socket.emit("pre-offer", {
+      type,
+      code,
+    });
+  };
   return (
     <Grid item xs className="gridLeft">
       <div className="flex-center medium-gap">
@@ -42,10 +47,11 @@ export default function LeftMenu({ socketID, navigator }) {
         Talk to the people around the world , friends or strangers by passing
         their id or find random one
       </Typography>
+
       <TextField
         label="Your Personal Code"
         fullWidth
-        value={myCode ? myCode : ""}
+        value={myCode}
         variant="outlined"
         InputProps={{
           endAdornment: (
@@ -73,8 +79,8 @@ export default function LeftMenu({ socketID, navigator }) {
         />
         <ConnectButton
           disabled={!friendCode}
-          onChatClick={() => console.log(`CHAT CLCIK`)}
-          onVideoClick={() => console.log(`Video CLCIK`)}
+          onChatClick={() => onButtonClick("chat-friend", friendCode)}
+          onVideoClick={() => onButtonClick("video-friend", friendCode)}
         />
       </div>
 
@@ -83,8 +89,8 @@ export default function LeftMenu({ socketID, navigator }) {
           Stranger
         </Typography>
         <ConnectButton
-          onChatClick={() => console.log(`CHAT CLCIK`)}
-          onVideoClick={() => console.log(`Video CLCIK`)}
+          onChatClick={() => onButtonClick("chat-stranger")}
+          onVideoClick={() => onButtonClick("video-stranger")}
         />
       </div>
 

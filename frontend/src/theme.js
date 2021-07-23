@@ -21,6 +21,7 @@ const theme = createTheme({
     MuiButton: {
       root: {
         textTransform: "capitalize",
+        fontWeight: "bold",
       },
     },
   },
