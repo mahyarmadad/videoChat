@@ -1,0 +1,12 @@
+.dialog-container {
+  padding: 16px;
+  text-align: center;
+}
+.caller-icon {
+  margin: 16px 0;
+}
+.button-div {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}

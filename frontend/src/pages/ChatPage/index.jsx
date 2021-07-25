@@ -10,6 +10,7 @@ const ENDPOINT = "http://localhost:5000";
 
 export default function ChatPage() {
   const [socketConnection, setSocketConnection] = useState(null);
+
   useEffect(() => {
     const socket = io(ENDPOINT);
     socket.on("connect", () => {

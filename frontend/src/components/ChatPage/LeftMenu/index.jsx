@@ -11,11 +11,15 @@ import { toast } from "material-react-toastify";
 import { useEffect, useState } from "react";
 import { FiCopy } from "react-icons/fi";
 import { GiVideoConference } from "react-icons/gi";
+import { useRecoilState } from "recoil";
+import { isCallingUser } from "../../../recoil/state";
 import ConnectButton from "./ConnectButton";
+import IsCallingDialog from "./IsCallingDialog";
 import "./leftMenu.css";
 export default function LeftMenu({ socket }) {
   const [myCode, setMycode] = useState("");
   const [friendCode, setFriendCode] = useState("");
+  const [isCalling, setIsCalling] = useRecoilState(isCallingUser);
   const [allowStrange, setAllowStrange] = useState(false);
   useEffect(() => {
     if (socket) {
@@ -24,6 +28,8 @@ export default function LeftMenu({ socket }) {
   }, [socket]);
 
   const onButtonClick = (type, code) => {
+    if (code === myCode) return toast.error("You can't Call yourself ");
+    setIsCalling(true);
     socket.emit("pre-offer", {
       type,
       code,
@@ -108,6 +114,8 @@ export default function LeftMenu({ socket }) {
           </Typography>
         }
       />
+
+      <IsCallingDialog open={isCalling} setOpen={setIsCalling} />
     </Grid>
   );
 }
