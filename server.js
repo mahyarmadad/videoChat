@@ -26,6 +26,17 @@ io.on("connection", (socket) => {
     if (connectedPeer) {
       const data = { callerId: socket.id, type };
       io.to(code).emit("pre-offer", data);
+    } else {
+      io.to(socket.id).emit("pre-offer-answer", {
+        answer: "Call_Not_Found",
+      });
+    }
+  });
+
+  socket.on("pre-offer-answer", (data) => {
+    const connectedPeer = users.find((user) => user == data.callerID);
+    if (connectedPeer) {
+      io.to(data.callerID).emit("pre-offer-answer", data);
     }
   });
 
